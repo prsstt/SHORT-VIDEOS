@@ -1,12 +1,13 @@
 TO DO:
--skrócenie czasu tworzenia wideo
--generowanie wideo poprzez GPU, a nie CPU
--dopasowanie tekstu do ekranu (9:16), tak żeby cały był widoczny(zawijanie wierszy)
--zmiana voice na jakiś lepszy
--tworzenie się tekstu part 1 i 2 na czarnym prostokącie
--dopasowanie dźwieku do wyświetlania się tekstu
+-zawijanie wierszy[zrobione w 50%, dłuższe teksty nadal się bugują i wychodzą poza ekran]
+-dopasowanie dźwieku do wyświetlania się tekstu[tworzenie osobnego dźwięku dla part1 i part2]
 -funkcja wybierania konkretnego backgroundu pod dany topic
 -generowanie topic, part 1, part 2 przez api chatgpt
 -automatyczne przesyłanie filmów na yt
 -automatyczne przesyłanie filmów na tt
 -automatyczne przesyłanie filmów na fb
+DONE:
+-skrócenie czasu tworzenia wideo
+-generowanie wideo poprzez GPU, a nie CPU
+-zmiana voice na jakiś lepszy
+-tworzenie się tekstu part 1 i 2 na czarnym prostokącie

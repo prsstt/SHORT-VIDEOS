@@ -1,10 +1,11 @@
 from moviepy.editor import *
 import os 
-from gtts import gTTS
 import csv
 import soundfile as sf
 from moviepy.config import change_settings
 from moviepy.video.fx.resize import resize
+import pyttsx3
+
 change_settings({"IMAGEMAGICK_BINARY": r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\\magick.exe"})
 #C:\Users\sh0cky\Desktop\YT AUTOMATIZATION\SHORT-VIDEOS\data.csv
 def generate_video(theme, part_1, part_2, full_text, tts_path):
@@ -44,32 +45,54 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
 
     final_video_path = "final_videos/" + full_text + ".mp4"
     final_video = CompositeVideoClip([base, part_1_clip_bg, part_1_clip, part_2_clip_bg, part_2_clip])
+
+    # Create a Text-to-Speech engine
+    engine = pyttsx3.init()
+
+    # Set the voice
+    #rate = engine.getProperty('rate')
+    #engine.setProperty('rate', rate-80)
+    voices = engine.getProperty('voices')
+    # Set the voice by index (change the index as per your system configuration)
+    engine.setProperty('voice', voices[4].id)
+
+    # Save the synthesized speech to a file
+    engine.save_to_file(full_text, tts_path)
+    engine.runAndWait()
+
     final_video.audio = fixed_tts_clip
     final_video.write_videofile(final_video_path, codec="h264_nvenc", fps=24)
-    return()
+    return
 
 # 700x45
 
 def main():
     _csv_file = input("csv file path:")
-    if(_csv_file):
+    if _csv_file:
         with open(_csv_file, 'r') as file: 
             reader = csv.reader(file, delimiter=";")
             next(reader)
             for row in reader:
-                if(len(row) >= 3):
+                if len(row) >= 3:
                     film_theme = row[0]
                     film_st_part = row[1]
                     film_nd_part = row[2]
-                    full_text =  f" {film_st_part} {film_nd_part}"
-                    tts = gTTS(text=full_text, lang="en", tld="ae", slow=False)
+                    full_text = f" {film_st_part} {film_nd_part}"
                     tts_path = "tts_voices/" + full_text + ".mp3"
-                    tts.save(tts_path)
+                    # Create a Text-to-Speech engine
+                    engine = pyttsx3.init()
+                    # Set the voice
+                    rate = engine.getProperty('rate')
+                    voices = engine.getProperty('voices')
+                    engine.setProperty('rate', rate-80)# Zmiana prędkości tts, działa mocno średnio, do zmiany!!!
+                    # Set the voice by index (change the index as per your system configuration)
+                    engine.setProperty('voice', voices[4].id)
+                    # Save the synthesized speech to a file
+                    engine.save_to_file(full_text, tts_path)
+                    engine.runAndWait()
+
                     generate_video(film_theme, film_st_part, film_nd_part, full_text, tts_path)
     return
 
-
-
-
-if __name__ == "__main__": 
+if __name__ == "__main__":
     main()
