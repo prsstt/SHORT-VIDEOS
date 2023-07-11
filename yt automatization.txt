@@ -1,0 +1,44 @@
+content topics: self-improvement\motivation, love, happiness, mindfulness
+each content with 1000 unique quotes split for 2 parts = 5000 unique videos 
+50 different video backgrounds
+same animations, different text and tts
+google tts voice: en-AU-Polyglot-1
+
+
+
+
+
+----PROMPTS ChatGPT----
+I want you to come up with some quotes in the following style i'm going to teach you. The quotes need to be made out of two parts. 
+The first part is a part where i want people to make intrigued to know the second part. 
+
+Here are two examples:
+
+
+Example one:
+First part:
+
+If you really love someone...
+
+Second part:
+
+You have to let it go.
+
+Example two:
+First part:
+When you're in lave...
+
+Second part:
+you just know, no matter what anyone else says
+
+If you understand, say yes.
+-----
+Okay, I want the quotes to be about self-improvement\motivation, love, happiness, mindfulness, heartbreaks, friendship and family. The target audience are people in their twenties, Could you give me one example for the theme "family" the theme "love" the theme "hapiness" the theme "self-improvement\motivation" the theme "mindfulness" the theme "heartbreaks" the theme "friendship" 
+-----
+I now want you to categorise them in excel style as following:
+
+Theme
+First part (here you place the first part of the quote)
+Second part (here you place the second part of the quote)
+-----
+Perfect, now i want you to write 30 different quotes about self-improvement\motivation, love, happiness, mindfulness, heartbreaks, friendship and family in the same style.
