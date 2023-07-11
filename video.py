@@ -25,18 +25,25 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
     theme_clip = theme_clip.set_position(("center", 80))
     theme_clip = theme_clip.set_duration(tts_clip.duration + 2)
 
-    part_1_clip = TextClip(part_1, font="Arial", fontsize=50, align="center", color="white", kerning=2, size= _size, method="caption")
+    part_1_clip = TextClip(part_1, font="Arial", fontsize=100, align="west", color="white", kerning=5, method="caption")
     part_1_clip = part_1_clip.set_duration(3)
     part_1_clip = part_1_clip.set_position("center")
-    #part_2_clip_bg = ColorClip(size=())
+    part_1_clip_bg = ColorClip(size=part_1_clip.size, color=(0, 0, 0))
+    part_1_clip_bg = part_1_clip_bg.set_duration(3)
+    part_1_clip_bg = part_1_clip_bg.set_position("center")
 
-    part_2_clip = TextClip(part_2, font="Arial", fontsize=50, align="center",  color="white", kerning=2,  size = _size, method="caption")
+    part_2_clip = TextClip(part_2, font="Arial", fontsize=100, align="west", color="white", kerning=5, method="caption")
     part_2_clip = part_2_clip.set_start(4)
     part_2_clip = part_2_clip.set_duration(4)
     part_2_clip = part_2_clip.set_position("center")
 
+    part_2_clip_bg = ColorClip(size=part_2_clip.size, color=(0, 0, 0))
+    part_2_clip_bg = part_2_clip_bg.set_start(4)
+    part_2_clip_bg = part_2_clip_bg.set_duration(4)
+    part_2_clip_bg = part_2_clip_bg.set_position("center")
+
     final_video_path = "final_videos/" + full_text + ".mp4"
-    final_video = CompositeVideoClip([base, theme_clip, part_1_clip, part_2_clip])
+    final_video = CompositeVideoClip([base, theme_clip, part_1_clip_bg, part_1_clip, part_2_clip_bg, part_2_clip])
     final_video.audio = fixed_tts_clip
     final_video.write_videofile(final_video_path, codec="h264_nvenc", fps=24)
     return()
