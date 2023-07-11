@@ -4,6 +4,7 @@ from gtts import gTTS
 import csv
 import soundfile as sf
 from moviepy.config import change_settings
+from moviepy.video.fx.resize import resize
 change_settings({"IMAGEMAGICK_BINARY": r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\\magick.exe"})
 
 def generate_video(theme, part_1, part_2, full_text, tts_path):
@@ -15,7 +16,7 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
 
     base = concatenate_videoclips(background_images, method="compose")
     
-    _size = 1280, 700
+    _size = 1080, 1920
 
     #text_clip = TextClip(full_text, font="Arial", fontsize=50, color="white")
     #text_clip = text_clip.set_position("center").set_duration(tts_clip.duration)
@@ -24,11 +25,12 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
     theme_clip = theme_clip.set_position(("center", 80))
     theme_clip = theme_clip.set_duration(tts_clip.duration + 2)
 
-    part_1_clip = TextClip(part_1, font="Arial", fontsize=50, stroke_width=2, stroke_color="black", color="white", kerning=5, size= _size, method="label")
+    part_1_clip = TextClip(part_1, font="Arial", fontsize=50, align="center", color="white", kerning=2, size= _size, method="caption")
     part_1_clip = part_1_clip.set_duration(3)
     part_1_clip = part_1_clip.set_position("center")
+    #part_2_clip_bg = ColorClip(size=())
 
-    part_2_clip = TextClip(part_2, font="Arial", fontsize=50, stroke_width=2, stroke_color="black",  color="white", kerning=5,  size = _size, method="label")
+    part_2_clip = TextClip(part_2, font="Arial", fontsize=50, align="center",  color="white", kerning=2,  size = _size, method="caption")
     part_2_clip = part_2_clip.set_start(4)
     part_2_clip = part_2_clip.set_duration(4)
     part_2_clip = part_2_clip.set_position("center")
@@ -36,10 +38,10 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
     final_video_path = "final_videos/" + full_text + ".mp4"
     final_video = CompositeVideoClip([base, theme_clip, part_1_clip, part_2_clip])
     final_video.audio = fixed_tts_clip
-    final_video.write_videofile(final_video_path, fps=24)
+    final_video.write_videofile(final_video_path, codec="h264_nvenc", fps=24)
     return()
 
-
+# 700x45
 
 def main():
     _csv_file = input("csv file path:")
