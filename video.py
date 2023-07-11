@@ -1,110 +1,66 @@
-from gtts import gTTS
 from moviepy.editor import *
-from PIL import Image
+import os 
+from gtts import gTTS
 import csv
-import numpy as np
-# Load CSV file
-csv_file = 'data.csv'
+import soundfile as sf
+from moviepy.config import change_settings
+change_settings({"IMAGEMAGICK_BINARY": r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\\magick.exe"})
 
-# Set paths
-output_audio = 'output_audio.mp3'
-output_video = r'C:\Users\sh0cky\Desktop\YT AUTOMATIZATION\output_video.mp4'
-background_image = 'background_image.jpg'
-font_path = 'font.ttf'
-text_position_top = (640, 100)
-text_position_center = (640, 360)
-font_size_top = 48
-font_size_center = 72
-text_color = (255, 255, 255)
-text_duration = 9  # in seconds
-text_pause = 1  # in seconds
-width = 720
-height = 1280
-# Create audio from CSV file
-def create_audio_from_csv(csv_file, output_audio):
-    quotes = []
-    with open(csv_file, 'r') as file:
-        reader = csv.reader(file)
-        next(reader)  # Skip the header row
-        for row in reader:
-            if len(row) >= 3:  # Check if the row has at least 3 columns
-                theme = row[0]
-                first_part = row[1]
-                second_part = row[2]
-                quote = f"{theme} {first_part} {second_part}"
-                quotes.append(quote)
+def generate_video(theme, part_1, part_2, full_text, tts_path):
+    tts_clip = AudioFileClip(tts_path)  
+    fixed_tts_clip = CompositeAudioClip([tts_clip])
 
-    if quotes:
-        full_text = ' '.join(quotes)
-        tts = gTTS(text=full_text, lang='en', tld='com.au', slow=False)
-        tts.save(output_audio)
-    else:
-        print("No quotes found in the CSV file.")
+    background_images = []
+    background_images.append(ImageClip("background_image.jpg").set_duration(tts_clip.duration + 2))
 
-# Create video with text overlay
-def create_video_with_text(background_image, output_video, font_path, text_position_top, text_position_center,
-                           font_size_top, font_size_center, text_color, text_duration, text_pause):
-    width = 720  # Width of the video
-    height = 1280  # Height of the video
+    base = concatenate_videoclips(background_images, method="compose")
+    
+    _size = 1280, 700
 
-    # Resize the background image to match the desired aspect ratio
-    background = Image.open(background_image)
-    background = background.resize((width, height))
+    #text_clip = TextClip(full_text, font="Arial", fontsize=50, color="white")
+    #text_clip = text_clip.set_position("center").set_duration(tts_clip.duration)
 
-    clip = ImageClip(np.array(background))
-    clip = clip.set_duration(text_duration * 2 + text_pause)
+    theme_clip = TextClip(theme, font="Arial-Bold", fontsize=80, color="white", stroke_width=2, stroke_color="black")
+    theme_clip = theme_clip.set_position(("center", 80))
+    theme_clip = theme_clip.set_duration(tts_clip.duration + 2)
 
-def text_generator():
-    with open(csv_file, 'r') as file:
-        reader = csv.reader(file)
-        next(reader)  # Skip the header row
-        for row in reader:
-            if len(row) >= 3:  # Check if the row has at least 3 columns
-                theme = row[0]
-                first_part = row[1]
-                second_part = row[2]
+    part_1_clip = TextClip(part_1, font="Arial", fontsize=50, stroke_width=2, stroke_color="black", color="white", kerning=5, size= _size, method="label")
+    part_1_clip = part_1_clip.set_duration(3)
+    part_1_clip = part_1_clip.set_position("center")
 
-                txt_clip_top = TextClip(theme, fontsize=font_size_top, font=str(font_path), color=text_color) \
-                    .set_position(text_position_top) \
-                    .set_duration(text_duration)
+    part_2_clip = TextClip(part_2, font="Arial", fontsize=50, stroke_width=2, stroke_color="black",  color="white", kerning=5,  size = _size, method="label")
+    part_2_clip = part_2_clip.set_start(4)
+    part_2_clip = part_2_clip.set_duration(4)
+    part_2_clip = part_2_clip.set_position("center")
 
-                txt_clip_center = TextClip(first_part, fontsize=font_size_center, font=str(font_path),
-                                           color=text_color) \
-                    .set_position(text_position_center) \
-                    .set_duration(text_duration)
-
-                pause_clip = TextClip('', duration=text_pause)
-                clip = concatenate_videoclips([txt_clip_top, txt_clip_center, pause_clip])
-                clip = clip.set_position((0, 0))
-
-                # Resize the clip to match the desired aspect ratio
-                clip = clip.resize(width=width, height=height)
-                yield clip
+    final_video_path = "final_videos/" + full_text + ".mp4"
+    final_video = CompositeVideoClip([base, theme_clip, part_1_clip, part_2_clip])
+    final_video.audio = fixed_tts_clip
+    final_video.write_videofile(final_video_path, fps=24)
+    return()
 
 
-    video_clips = list(text_generator())
 
-    final_video = concatenate_videoclips(video_clips)
-    final_video = CompositeVideoClip([clip, final_video])
-    final_video = final_video.set_duration(duration)
-    final_video = final_video.set_audio(audio)
+def main():
+    _csv_file = input("csv file path:")
+    if(_csv_file):
+        with open(_csv_file, 'r') as file: 
+            reader = csv.reader(file, delimiter=";")
+            next(reader)
+            for row in reader:
+                if(len(row) >= 3):
+                    film_theme = row[0]
+                    film_st_part = row[1]
+                    film_nd_part = row[2]
+                    full_text =  f"{film_theme} {film_st_part} {film_nd_part}"
+                    tts = gTTS(text=full_text, lang="en", tld="com.au", slow=False)
+                    tts_path = "tts_voices/" + full_text + ".mp3"
+                    tts.save(tts_path)
+                    generate_video(film_theme, film_st_part, film_nd_part, full_text, tts_path)
+    return
 
-    # Set the video resolution and aspect ratio
-    final_video = final_video.resize(height=height)
 
-    # Write the final video file
-    final_video.write_videofile(output_video, fps=24)
 
-# Convert CSV to audio
-create_audio_from_csv(csv_file, output_audio)
 
-# Read audio and create video
-audio = AudioFileClip(output_audio)
-duration = audio.duration
-
-# Create video with text overlay
-create_video_with_text(background_image, output_video, font_path, text_position_top, text_position_center,
-                       font_size_top, font_size_center, text_color, text_duration, text_pause)
-
-# Clean up temporary files (optional)
-audio.close()
+if __name__ == "__main__": 
+    main()
