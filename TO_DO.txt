@@ -1,4 +1,4 @@
-TO DO:
+------------------TO DO------------------
 -zawijanie wierszy[zrobione w 50%, dłuższe teksty nadal się bugują i wychodzą poza ekran]
 -dopasowanie dźwieku do wyświetlania się tekstu[tworzenie osobnego dźwięku dla part1 i part2]
 -funkcja wybierania konkretnego backgroundu pod dany topic
@@ -6,7 +6,7 @@ TO DO:
 -automatyczne przesyłanie filmów na yt
 -automatyczne przesyłanie filmów na tt
 -automatyczne przesyłanie filmów na fb
-DONE:
+-------------------DONE------------------
 -skrócenie czasu tworzenia wideo
 -generowanie wideo poprzez GPU, a nie CPU
 -zmiana voice na jakiś lepszy
