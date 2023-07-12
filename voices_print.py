@@ -11,8 +11,3 @@ for voice in voices:
     print("Voice Name:", voice.name)
     print(" - ID:", voice.id)
     print()
-
-# Test selected voice
-engine.setProperty('voice', voices[4].id)
-engine.say("This is a test.")
-engine.runAndWait()
