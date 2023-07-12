@@ -65,7 +65,12 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
     # Write the final video file
     final_video.write_videofile(final_video_path, codec="h264_nvenc", fps=24)
 
-    return
+    # Delete the old tts sound file 
+    os.remove(tts_path)
+
+    #Finall message
+    print(f"Video was rendered at the path {final_video_path}")
+    return 
 
 # 700x45
 
@@ -83,6 +88,7 @@ def main():
                     full_text = f" {film_st_part} {film_nd_part}"
                     tts_path = "tts_voices/" + full_text + ".mp3"
                     generate_video(film_theme, film_st_part, film_nd_part, full_text, tts_path)
+
     return
 
 if __name__ == "__main__":

@@ -16,15 +16,6 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
     background_images.append(ImageClip("background_image.jpg").set_duration(tts_clip.duration + 2))
 
     base = concatenate_videoclips(background_images, method="compose")
-    
-    _size = 1080, 1920
-
-    #text_clip = TextClip(full_text, font="Arial", fontsize=50, color="white")
-    #text_clip = text_clip.set_position("center").set_duration(tts_clip.duration)
-
-    #theme_clip = TextClip(theme, font="Arial-Bold", fontsize=80, color="white", stroke_width=2, stroke_color="black")
-    #theme_clip = theme_clip.set_position(("center", 80))
-    #theme_clip = theme_clip.set_duration(tts_clip.duration + 2)
 
     part_1_clip = TextClip(part_1, font="Arial", fontsize=50, align="center", color="white", kerning=None, method="label")
     part_1_clip = part_1_clip.set_duration(3)
@@ -46,22 +37,15 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
     final_video_path = "final_videos/" + full_text + ".mp4"
     final_video = CompositeVideoClip([base, part_1_clip_bg, part_1_clip, part_2_clip_bg, part_2_clip])
 
-    # Create a Text-to-Speech engine
-    engine = pyttsx3.init()
-
-    # Set the voice
-    #rate = engine.getProperty('rate')
-    #engine.setProperty('rate', rate-80)
-    voices = engine.getProperty('voices')
-    # Set the voice by index (change the index as per your system configuration)
-    engine.setProperty('voice', voices[4].id)
-
-    # Save the synthesized speech to a file
-    engine.save_to_file(full_text, tts_path)
-    engine.runAndWait()
-
     final_video.audio = fixed_tts_clip
     final_video.write_videofile(final_video_path, codec="h264_nvenc", fps=24)
+
+    # Delete the old tts sound file 
+    os.remove(tts_path)
+
+    #Finall message
+    print(f"Video was rendered at the path {final_video_path}")
+
     return
 
 # 700x45
@@ -84,9 +68,10 @@ def main():
                     # Set the voice
                     rate = engine.getProperty('rate')
                     voices = engine.getProperty('voices')
-                    engine.setProperty('rate', rate-80)# Zmiana prędkości tts, działa mocno średnio, do zmiany!!!
+                    engine.setProperty("voice", 'en-us')
+                    engine.setProperty('rate', rate-150)# Zmiana prędkości tts, działa mocno średnio, do zmiany!!!
                     # Set the voice by index (change the index as per your system configuration)
-                    engine.setProperty('voice', voices[4].id)
+                    engine.setProperty('voice', voices[0].id)
                     # Save the synthesized speech to a file
                     engine.save_to_file(full_text, tts_path)
                     engine.runAndWait()
