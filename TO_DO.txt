@@ -1,4 +1,5 @@
 ------------------TO DO------------------
+-zloopowanie filmików tak, aby nie było momentu na końcu gdzie nie ma tekstu i jest sam background
 -zawijanie wierszy[zrobione w 50%, dłuższe teksty nadal się bugują i wychodzą poza ekran]
 -dopasowanie dźwieku do wyświetlania się tekstu[tworzenie osobnego dźwięku dla part1 i part2]
 -zaimplementowanie Voice-RealTime-Clone[https://github.com/CorentinJ/Real-Time-Voice-Cloning/tree/master] do generowania TTS
