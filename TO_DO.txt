@@ -2,6 +2,7 @@
 -zawijanie wierszy[zrobione w 50%, dłuższe teksty nadal się bugują i wychodzą poza ekran]
 -dopasowanie dźwieku do wyświetlania się tekstu[tworzenie osobnego dźwięku dla part1 i part2]
 -zaimplementowanie Voice-RealTime-Clone[https://github.com/CorentinJ/Real-Time-Voice-Cloning/tree/master] do generowania TTS
+-dodanie funkcji która pozwalała by na zmianę topicow i generowanie przez chatgpt
 -generowanie topic, part 1, part 2 przez api chatgpt
 -automatyczne przesyłanie filmów na yt
 -automatyczne przesyłanie filmów na tt
