@@ -5,17 +5,19 @@ import soundfile as sf
 from moviepy.config import change_settings
 from moviepy.video.fx.resize import resize
 import pyttsx3
+import random
+import glob
 
 change_settings({"IMAGEMAGICK_BINARY": r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\\magick.exe"})
 #C:\Users\sh0cky\Desktop\YT AUTOMATIZATION\SHORT-VIDEOS\data.csv
-def generate_video(theme, part_1, part_2, full_text, tts_path):
+def generate_video(theme, part_1, part_2, full_text, tts_path, background_images):
     tts_clip = AudioFileClip(tts_path)  
     fixed_tts_clip = CompositeAudioClip([tts_clip])
+     # Select a random background image from the list
+    background_image_path = random.choice(background_images)
+    background_image_clip = ImageClip(background_image_path).set_duration(tts_clip.duration + 2)
 
-    background_images = []
-    background_images.append(ImageClip("background_image.jpg").set_duration(tts_clip.duration + 2))
-
-    base = concatenate_videoclips(background_images, method="compose")
+    base = concatenate_videoclips([background_image_clip], method="compose")
 
     part_1_clip = TextClip(part_1, font="Arial", fontsize=50, align="center", color="white", kerning=None, method="label")
     part_1_clip = part_1_clip.set_duration(3)
@@ -31,7 +33,7 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
 
     part_2_clip_bg = ColorClip(size=part_2_clip.size, color=(0, 0, 0))
     part_2_clip_bg = part_2_clip_bg.set_start(4)
-    part_2_clip_bg = part_2_clip_bg.set_duration(4)
+    part_2_clip_bg = part_2_clip_bg.set_duration(8)
     part_2_clip_bg = part_2_clip_bg.set_position("center")
 
     final_video_path = "final_videos/" + full_text + ".mp4"
@@ -51,8 +53,10 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
 # 700x45
 
 def main():
-    _csv_file = input("csv file path:")
-    if _csv_file:
+    _csv_file = input("CSV file path: ")
+    _image_dir = input("Background image directory: ")
+    
+    if _csv_file and _image_dir:
         with open(_csv_file, 'r') as file: 
             reader = csv.reader(file, delimiter=";")
             next(reader)
@@ -63,20 +67,20 @@ def main():
                     film_nd_part = row[2]
                     full_text = f" {film_st_part} {film_nd_part}"
                     tts_path = "tts_voices/" + full_text + ".mp3"
-                    # Create a Text-to-Speech engine
+                    
                     engine = pyttsx3.init()
-                    # Set the voice
                     rate = engine.getProperty('rate')
                     voices = engine.getProperty('voices')
                     engine.setProperty("voice", 'en-us')
-                    engine.setProperty('rate', rate-150)# Zmiana prędkości tts, działa mocno średnio, do zmiany!!!
-                    # Set the voice by index (change the index as per your system configuration)
+                    engine.setProperty('rate', rate-80)
                     engine.setProperty('voice', voices[0].id)
-                    # Save the synthesized speech to a file
                     engine.save_to_file(full_text, tts_path)
                     engine.runAndWait()
+                    
+                    background_images = glob.glob(os.path.join(_image_dir, '*.jpg'))
 
-                    generate_video(film_theme, film_st_part, film_nd_part, full_text, tts_path)
+                    generate_video(film_theme, film_st_part, film_nd_part, full_text, tts_path, background_images)
+
     return
 
 if __name__ == "__main__":
