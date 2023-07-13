@@ -1,13 +1,16 @@
-TO DO:
+------------------TO DO------------------
+-zloopowanie filmików tak, aby nie było momentu na końcu gdzie nie ma tekstu i jest sam background
 -zawijanie wierszy[zrobione w 50%, dłuższe teksty nadal się bugują i wychodzą poza ekran]
 -dopasowanie dźwieku do wyświetlania się tekstu[tworzenie osobnego dźwięku dla part1 i part2]
--funkcja wybierania konkretnego backgroundu pod dany topic
+-zaimplementowanie Voice-RealTime-Clone[https://github.com/CorentinJ/Real-Time-Voice-Cloning/tree/master] do generowania TTS
+-dodanie funkcji która pozwalała by na zmianę topicow i generowanie przez chatgpt
 -generowanie topic, part 1, part 2 przez api chatgpt
 -automatyczne przesyłanie filmów na yt
 -automatyczne przesyłanie filmów na tt
 -automatyczne przesyłanie filmów na fb
-DONE:
+-------------------DONE------------------
 -skrócenie czasu tworzenia wideo
 -generowanie wideo poprzez GPU, a nie CPU
 -zmiana voice na jakiś lepszy
 -tworzenie się tekstu part 1 i 2 na czarnym prostokącie
+-funkcja wybierania randomowego backgroundu pod topic
