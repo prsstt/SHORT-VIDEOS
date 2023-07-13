@@ -27,7 +27,7 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
     background_images = []
 
     #trzeba tutaj duration ogarnac dobre bo cos mi nie pasuje
-    background_images.append(ImageClip("background_image.jpg").set_duration(tts_clip_part_1_duration + tts_clip_part_2_duration + 3))
+    background_images.append(ImageClip("bg_images/background_image.jpg").set_duration(tts_clip_part_1_duration + tts_clip_part_2_duration + 3))
 
     base = concatenate_videoclips(background_images, method="compose")
     

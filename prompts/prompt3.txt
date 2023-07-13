@@ -1,0 +1,5 @@
+I now want you to categorise them in excel style as following:
+
+Theme
+First part (here you place the first part of the quote)
+Second part (here you place the second part of the quote)
