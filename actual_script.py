@@ -1,3 +1,4 @@
+#to jest plik do pisania i testowania uploadu potem zmienie nazwe albo to rozdziele jak cos
 from moviepy.editor import *
 import os 
 import csv
@@ -6,10 +7,10 @@ from moviepy.config import change_settings
 from moviepy.video.fx.resize import resize
 import pyttsx3
 import soundfile as sf
-
-
+import textwrap
 change_settings({"IMAGEMAGICK_BINARY": r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\\magick.exe"})
 #C:\Users\sh0cky\Desktop\YT AUTOMATIZATION\SHORT-VIDEOS\data.csv
+#40 znaków na wiersz
 def generate_video(theme, part_1, part_2, full_text, tts_path):
 
     #tts_clip_theme = AudioFileClip(tts_path[0])
@@ -27,15 +28,18 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
     background_images = []
 
     #trzeba tutaj duration ogarnac dobre bo cos mi nie pasuje
-    background_images.append(ImageClip("bg_images/background_image.jpg").set_duration(tts_clip_part_1_duration + tts_clip_part_2_duration + 3))
+    background_images.append(ImageClip("bg_images/lake-nature.jpg").set_duration(tts_clip_part_1_duration + tts_clip_part_2_duration + 3))
 
     base = concatenate_videoclips(background_images, method="compose")
-    
+    size = 1080, 1920
 
-    #PART1 
-    part_1_clip = TextClip(part_1, font="Arial", fontsize=50, align="center", color="white", kerning=None, method="label")
+   #PART1
+    wrapped_part_1 = textwrap.wrap(part_1, width=40)
+    part_1_text = "\n".join(wrapped_part_1)
+    part_1_clip = TextClip(part_1_text, font="Arial", fontsize=50, align="center", color="white", method="label")
     part_1_clip = part_1_clip.set_duration(tts_clip_part_1_duration)
     part_1_clip = part_1_clip.set_position("center")
+
 
     part_1_clip_bg = ColorClip(size=part_1_clip.size, color=(0, 0, 0))
     part_1_clip_bg = part_1_clip_bg.set_duration(tts_clip_part_1_duration)
@@ -43,8 +47,10 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
 
 
     #PART2
-    part_2_clip = TextClip(part_2, font="Arial", fontsize=50, align="center", color="white", kerning=None, method="label")
-    part_2_clip = part_2_clip.set_start(tts_clip_part_1.duration + 1 )
+    wrapped_part_2 = textwrap.wrap(part_2, width=40)
+    part_2_text = "\n".join(wrapped_part_2)
+    part_2_clip = TextClip(part_2_text, font="Arial", fontsize=50, align="center", color="white", method="label")
+    part_2_clip = part_2_clip.set_start(tts_clip_part_1.duration + 1)
     part_2_clip = part_2_clip.set_duration(tts_clip_part_2.duration)
     part_2_clip = part_2_clip.set_position("center")
 
@@ -58,7 +64,7 @@ def generate_video(theme, part_1, part_2, full_text, tts_path):
     final_video_path = "final_videos/" + full_text + ".mp4"
     final_video = CompositeVideoClip([base, part_1_clip_bg, part_1_clip, part_2_clip_bg, part_2_clip])
     final_video.set_duration(tts_clip_part_1_duration + tts_clip_part_2_duration + 2)
-
+    final_video = final_video.resize(width=1080, height=1920)
     #zostaw to jak jest bo rozpierdoolisz zaufaj mi    
     fixed_tts_clip = CompositeAudioClip([tts_clip_part_1.set_duration(part_1_clip.duration), tts_clip_part_2.set_duration(part_2_clip.duration)])
 
@@ -93,7 +99,7 @@ def main():
                     engine.setProperty("voice", 'en-us')
                     engine.setProperty('rate', rate-150)# Zmiana prędkości tts, działa mocno średnio, do zmiany!!!
                     # Set the voice by index (change the index as per your system configuration)
-                    engine.setProperty('voice', voices[0].id)
+                    engine.setProperty('voice', voices[4].id)
                     # Save the synthesized speech to a file
 
                     #Tworzenie odzielnych ttsow dla parstow
@@ -106,3 +112,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
