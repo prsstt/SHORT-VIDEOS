@@ -1,15 +1,17 @@
 ------------------TO DO------------------
--zawijanie wierszy[zrobione w 50%, dłuższe teksty nadal się bugują i wychodzą poza ekran]
--zaimplementowanie Voice-RealTime-Clone[https://github.com/CorentinJ/Real-Time-Voice-Cloning/tree/master] do generowania TTS
+-zaimplementowanie lepszego TTS
+-ulepszenie wyglądu filmów
+-funkcja konfiguracji wyglądu filmów
+-stworzenie czegoś w rodzaju szablonów
 -dodanie funkcji która pozwalała by na zmianę topicow i generowanie przez chatgpt
 -generowanie topic, part 1, part 2 przez api chatgpt
 -automatyczne przesyłanie filmów na yt
 -automatyczne przesyłanie filmów na tt
 -automatyczne przesyłanie filmów na fb
 -------------------DONE------------------
+-zawijanie wierszy[zrobione w 50%, dłuższe teksty nadal się bugują i wychodzą poza ekran]
 -skrócenie czasu tworzenia wideo
 -generowanie wideo poprzez GPU, a nie CPU
--zmiana voice na jakiś lepszy
 -tworzenie się tekstu part 1 i 2 na czarnym prostokącie
 -funkcja wybierania randomowego backgroundu pod topic
 -dopasowanie dźwieku do wyświetlania się tekstu[tworzenie osobnego dźwięku dla part1 i part2[krxys - do testow]
