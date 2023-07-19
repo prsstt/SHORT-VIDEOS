@@ -2,14 +2,14 @@
 -zaimplementowanie lepszego TTS
 -ulepszenie wyglądu filmów
 -funkcja konfiguracji wyglądu filmów
--stworzenie czegoś w rodzaju szablonów
 -dodanie funkcji która pozwalała by na zmianę topicow i generowanie przez chatgpt
 -generowanie topic, part 1, part 2 przez api chatgpt
 -automatyczne przesyłanie filmów na yt
 -automatyczne przesyłanie filmów na tt
 -automatyczne przesyłanie filmów na fb
 -------------------DONE------------------
--zawijanie wierszy[zrobione w 50%, dłuższe teksty nadal się bugują i wychodzą poza ekran]
+-stworzenie czegoś w rodzaju szablonów
+-zawijanie wierszy
 -skrócenie czasu tworzenia wideo
 -generowanie wideo poprzez GPU, a nie CPU
 -tworzenie się tekstu part 1 i 2 na czarnym prostokącie

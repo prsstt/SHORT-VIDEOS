@@ -1,0 +1,10 @@
+{
+    "background_image": "lake-nature.jpg",
+    "font": {
+      "family": "Arial",
+      "size": 50,
+      "color": "white"
+    },
+    "letters_width_wrap": "40"
+  }
+  
