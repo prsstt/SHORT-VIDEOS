@@ -16,3 +16,7 @@
 -funkcja wybierania randomowego backgroundu pod topic
 -dopasowanie dźwieku do wyświetlania się tekstu[tworzenie osobnego dźwięku dla part1 i part2[krxys - do testow]
 -zloopowanie filmików tak, aby nie było momentu na końcu gdzie nie ma tekstu i jest sam background[krxys - do testow ]
+-ustawianie czarnego tła w przypadku w którym w configu nie ma ustawionego tła
+-ustawianie background image/background video z poziomu configu
+-loopowanie background video, jeżeli jest krótszy niż tts
+-zmiana voice, voice speed, koloru tła za tekstem z poziomu configu

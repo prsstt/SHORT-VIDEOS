@@ -1,10 +1,13 @@
 {
-    "background_image": "lake-nature.jpg",
+    "background_video": "example2.mp4",
+    "text_box_color": [0, 0, 0],
     "font": {
       "family": "Arial",
       "size": 50,
       "color": "white"
     },
-    "letters_width_wrap": "40"
+    "letters_width_wrap": "40",
+    "tts_voice_id": 4,
+    "tts_voice_speed": 150
   }
   
