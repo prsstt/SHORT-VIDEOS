@@ -7,7 +7,11 @@
       "color": "white"
     },
     "letters_width_wrap": "40",
-    "tts_voice_id": 4,
-    "tts_voice_speed": 150
+    "tts_voice_id": 0,
+    "tts_voice_speed": 0.75,
+    "tts_emotion" : "Happy",
+    "tts_language" : "en",
+    "tts_model_name" : "tts_models/en/vctk/vits",
+    "tts_speaker" : "p230"
   }
   

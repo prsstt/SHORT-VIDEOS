@@ -6,10 +6,10 @@ import soundfile as sf
 from moviepy.config import change_settings
 from moviepy.video.fx.resize import resize
 from PIL import Image
-import pyttsx3
 import soundfile as sf
 import textwrap
 import json
+from TTS.api import TTS
 change_settings({"IMAGEMAGICK_BINARY": r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\\magick.exe"})
 #C:\Users\sh0cky\Desktop\YT AUTOMATIZATION\SHORT-VIDEOS\data.csv
 #40 znaków na wiersz
@@ -118,28 +118,24 @@ def main():
                     film_nd_part = row[2]
                     full_text = f" {film_st_part} {film_nd_part}"
                     tts_path = ["tts_voices/" + film_theme + ".mp3", "tts_voices/" + film_st_part + ".mp3", "tts_voices/" + film_nd_part + ".mp3"]
-                    # Create a Text-to-Speech engine
-                    engine = pyttsx3.init()
-                    # Set the voice
-                    rate = engine.getProperty('rate')
-                    voices = engine.getProperty('voices')
+
+
+
+
                     with open(f"configurations/{film_theme}_template.json", 'r') as config_file:
                         config = json.load(config_file)
-
-                    # Set the voice by the value from the config file
-                    tts_voice_id = config.get('tts_voice_id')#, voices[4].id)
-                    engine.setProperty('voice', voices[tts_voice_id].id)
-
-                    # Set the voice speed by the value from the config file or use a default value
-                    tts_voice_speed = config.get('tts_voice_speed')#, rate - 150)
-                    engine.setProperty('rate', rate - tts_voice_speed)
-                    # Save the synthesized speech to a file
-
+                    tts_language = config.get('tts_language')
+                    tts_emotion = config.get('tts_emotion')
+                    tts_voice_id = config.get('tts_voice_id')
+                    tts_voice_speed = config.get('tts_voice_speed')
+                    model_name = config.get('tts_model_name')
+                    tts_speaker = config.get('tts_speaker')
+                    tts = TTS(model_name)
+                    
                     #Tworzenie odzielnych ttsow dla parstow
                     for _index, _path in enumerate(tts_path):
-                        engine.save_to_file(row[_index], _path)
-                        engine.runAndWait()
-
+                        # Use TTS API to generate speech
+                        tts.tts_to_file(text=row[_index], speaker=tts_speaker, file_path=_path, emotion=tts_emotion, speed=tts_voice_speed, progress_bar=True, gpu=True)
                     config_file_path = f"configurations/{film_theme}_template.json"
 
                     generate_video(film_theme, film_st_part, film_nd_part, full_text, tts_path, config_file_path)
