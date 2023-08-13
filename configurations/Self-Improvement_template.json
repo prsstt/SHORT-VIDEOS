@@ -12,6 +12,7 @@
     "tts_emotion" : "Happy",
     "tts_language" : "en",
     "tts_model_name" : "tts_models/en/vctk/vits",
-    "tts_speaker" : "p230"
+    "tts_speaker" : "p230",
+    "final_video_path" : "C:/Users/sh0cky/Desktop/YT AUTOMATIZATION/puppeteer_upload_project/movies/"
   }
   

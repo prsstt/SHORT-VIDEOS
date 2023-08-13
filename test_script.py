@@ -88,7 +88,7 @@ def generate_video(theme, part_1, part_2, full_text, tts_path, config_file_path)
     tts_clip_part_2.start = tts_clip_part_1_duration + 1 
 
 
-    final_video_path = "final_videos/" + full_text + ".mp4"
+    final_video_path = config.get("final_video_path") + full_text + ".mp4"
     final_video = CompositeVideoClip([base, part_1_clip_bg, part_1_clip, part_2_clip_bg, part_2_clip])
     final_video.set_duration(tts_clip_part_1_duration + tts_clip_part_2_duration + 2)
     #final_video = final_video.resize(width=1080, height=1920)
